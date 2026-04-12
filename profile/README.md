@@ -4,4 +4,4 @@ Our open-source solution directly addresses the significant **time wasted shoppi
 
 The technical objective is building and deploying our custom service that solves the **Travelling Salesman Problem (TSP)** in the context of our business model.
 
-> Complete [documentation](./../doc/problem.md) may be found in this repository.
+> Complete [documentation](./../doc/problem.md) may be found in this [repository](https://github.com/InAndOut-Stack/.github).
