@@ -12,20 +12,22 @@ To satisfy complex intents - such as de-listing an item from a shelf without del
 
 ## Services
 
-1. Route Service
-   - Actors: Customers
-   - Resources: Routes
-   - **/routes** - POST, GET, DELETE
-   - Store and stand selection interface
-2. Mapping Service
-   - Actors: Employee
-   - Resources: Stands, Floors, Nodes, Edges
+### 1. Route Service
 
+- Actors: Customers
+- Resources: Routes
+- **/routes** - POST, GET, DELETE
+- Store and stand selection interface
+
+### 2. Mapping Service
+
+- Actors: Employee
+- Resources: Stands, Floors, Nodes, Edges
 - **/stores/{storeId}/stands** - POST, GET, LIST, PUT, DELETE
-- **/stores/{storeId}/floors** = POST, GET, PUT, DELETE
+- **/stores/{storeId}/floors** - POST, GET, PUT, DELETE
 - Floor modelling interface
 
-3. Business Service
+### 3. Business Service
 
 - Actors: Brand/Store Owners
 - Resources: Brands, Stores, Offers
@@ -44,7 +46,7 @@ To satisfy complex intents - such as de-listing an item from a shelf without del
 5. InAndOut-Customer-Interface
 6. InAndOut-Mapping-Interface
 
-# Authorization (<span style="text-decoration:underline;">todo</span>)
+# Authorization
 
 The roles with higher ownership should inherit the permissions of those with less. For example a Store Owner should be able to edit the structure of the store.
 
@@ -64,24 +66,20 @@ This issue outlines the data structure, technical challenges, and implementation
 
 Each TSP solution object is composed of the following attributes:
 
-| storeId | UUID / String | Unique identifier for the specific store. |
-
-| standIds | List[String] | The collection of stands included in the optimization. |
-
-| result | List[List[Node]] | An array of routes containing node sequences to satisfy all requirements. |
-
-| storeVersion | Integer / String | The version snapshot used to generate the solution. |
+| Name         | Type             | Description                                                               |
+| ------------ | ---------------- | ------------------------------------------------------------------------- |
+| storeId      | UUID             | Unique identifier for the specific store.                                 |
+| standIds     | List[String]     | The collection of stands included in the optimization.                    |
+| result       | List[List[Node]] | An array of routes containing node sequences to satisfy all requirements. |
+| storeVersion | Integer          | The version snapshot used to generate the solution.                       |
 
 The nature of TSP optimization presents three primary challenges:
 
 - Computational Expense: High CPU overhead is required to recompute the same solution repeatedly.
-
 - Storage Footprint: Dwhigh-speed RAM cache (e.g., Redis) for near-instant retrieval.
-
 - Version Tracking: Every cached solution is tagged with a storeVersion.
 
 1.  Request: Retrieve the current storeVersion and check the cache for the corresponding storeId.
-
 2.  Validation: \* If cachedVersion == currentVersion: Return the cached solution immediately.
     - If cachedVersion != currentVersion (or no cache exists): Trigger a recomputation.
 
@@ -100,9 +98,7 @@ Format: tsp:{storeId}:{mappingVersion}:{standsHash}
 To ensure the key remains the same regardless of the order in which the user selects the stands, follow this deterministic process:
 
 1.  Sort: Take the list of Stand IDs and sort them numerically: [10, 2, 5] -> [2, 5, 10].
-
 2.  Stringify: Join the sorted IDs with a delimiter: "2,5,10".
-
 3.  Hash: Apply a fast hashing algorithm (like MD5 or SHA-1) to the string to produce a fixed-length suffix: a1b2c3d4.
 
 ## 2. Value Structure (JSON)
@@ -111,15 +107,15 @@ Since the value is a list of node lists (solutions), we serialize the entire col
 
 Example value for key: tsp:101:v4:a1b2c3d4
 
-```
+```json
 [
   [
-    {"id": 1, "name": "Entrance"},
-    {"id": 12, "name": "Aisle 1"}
+    { "id": 1, "name": "Entrance" },
+    { "id": 12, "name": "Aisle 1" }
   ],
   [
-    {"id": 12, "name": "Aisle 1"},
-    {"id": 45, "name": "Milk Stand"}
+    { "id": 12, "name": "Aisle 1" },
+    { "id": 45, "name": "Milk Stand" }
   ]
 ]
 ```
@@ -130,18 +126,10 @@ OpenPriceMap? Queries for multiple store shopping upon?
 
 # References
 
-[https://github.com/apache/commons-math/blob/master/commons-math-examples/examples-sofm/tsp/src/main/java/org/apache/commons/math4/examples/sofm/tsp/TravellingSalesmanSolver.java](https://github.com/apache/commons-math/blob/master/commons-math-examples/examples-sofm/tsp/src/main/java/org/apache/commons/math4/examples/sofm/tsp/TravellingSalesmanSolver.java)
-
-[https://github.com/TheAlgorithms/Java/blob/master/src/main/java/com/thealgorithms/graph/TravelingSalesman.java](https://github.com/TheAlgorithms/Java/blob/master/src/main/java/com/thealgorithms/graph/TravelingSalesman.java)
-
-[https://petstore3.swagger.io/](https://petstore3.swagger.io/)
-
-[https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)
-
-[https://github.com/aws/aws-parallelcluster/blob/e6e636ac3550d7a2aabf10ee0245f0ddc9bdc5af/api/spec/smithy/model/parallelcluster.smithy#L8](https://github.com/aws/aws-parallelcluster/blob/e6e636ac3550d7a2aabf10ee0245f0ddc9bdc5af/api/spec/smithy/model/parallelcluster.smithy#L8)
-
-[https://dev.routific.com/use-cases/travelling-salesman-problem](https://dev.routific.com/use-cases/travelling-salesman-problem)
-
-[https://dbdiagram.io/d/InAndOut-693154e7d6676488ba8f6f4d](https://dbdiagram.io/d/InAndOut-693154e7d6676488ba8f6f4d)
-
-[https://github.com/apache/commons-math/blob/master/commons-math-examples/examples-sofm/tsp/src/main/java/org/apache/commons/math4/examples/sofm/tsp/TravellingSalesmanSolver.java](https://github.com/apache/commons-math/blob/master/commons-math-examples/examples-sofm/tsp/src/main/java/org/apache/commons/math4/examples/sofm/tsp/TravellingSalesmanSolver.java)
+- [https://petstore3.swagger.io/](https://petstore3.swagger.io/)
+- [https://dbdiagram.io/d/InAndOut-693154e7d6676488ba8f6f4d](https://dbdiagram.io/d/InAndOut-693154e7d6676488ba8f6f4d)
+- [https://github.com/apache/commons-math/blob/master/commons-math-examples/examples-sofm/tsp/src/main/java/org/apache/commons/math4/examples/sofm/tsp/TravellingSalesmanSolver.java](https://github.com/apache/commons-math/blob/master/commons-math-examples/examples-sofm/tsp/src/main/java/org/apache/commons/math4/examples/sofm/tsp/TravellingSalesmanSolver.java)
+- [https://github.com/TheAlgorithms/Java/blob/master/src/main/java/com/thealgorithms/graph/TravelingSalesman.java](https://github.com/TheAlgorithms/Java/blob/master/src/main/java/com/thealgorithms/graph/TravelingSalesman.java)
+- [https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)
+- [https://github.com/aws/aws-parallelcluster/blob/e6e636ac3550d7a2aabf10ee0245f0ddc9bdc5af/api/spec/smithy/model/parallelcluster.smithy#L8](https://github.com/aws/aws-parallelcluster/blob/e6e636ac3550d7a2aabf10ee0245f0ddc9bdc5af/api/spec/smithy/model/parallelcluster.smithy#L8)
+- [https://dev.routific.com/use-cases/travelling-salesman-problem](https://dev.routific.com/use-cases/travelling-salesman-problem)
