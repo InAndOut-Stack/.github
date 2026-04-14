@@ -32,7 +32,7 @@ The itinerary of a client requst before hitting our services:
 
 Client interfaces will be running on the CDN servers (here referred as CDN Interface) caching media, javascript, and responses from our backend services. In case of a cache miss, these will redirect the request to our Region gateway.
 
-### 2. Region Gateway
+#### 2. Region Gateway
 
 Region Gateway is a simple request forwarding: it call the API Gateway specific to the requested region. It is expected that most of the time the requested region and the "Region Gateway" region to correspond and therefore the latency added between these two steps is minimal. It could also be possible to deploy both gateways on the same machine to achive 0ms latency.
 
