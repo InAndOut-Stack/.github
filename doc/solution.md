@@ -36,8 +36,8 @@ The typical **Customer** workflow for generating an itinerary: he can optionally
   - **Product** = Simple product record with details like name, category, or vendor
   - **Store** = physical unit with a brand identity, location, and operating schedule
   - **Offer** = promotional logic linked to articles or stores
-  - Provided by the Brand Owner:
-    - **Brand** = the legal entity
+- Provided by the Brand Owner:
+  - **Brand** = the legal entity
 
 ### Relationships
 
