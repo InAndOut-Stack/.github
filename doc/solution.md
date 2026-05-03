@@ -25,13 +25,13 @@ The typical **Customer** workflow for generating an itinerary: he can optionally
 - Provided by the Customer:
   - **Route** = Optimal in-store navigation path for visiting all the selected articles
 - Provided by the Employee:
+  - **Stand** = Array of shelves alongside an edge where multiple articles can be placed
   - **Floor** = Undirected graph having nodes and edges representing a map component of a store
   - **Node** = Navigation point acting as an intersection between two edges
   - **Edge** = Navigation aisle open to Customers
-  - **Stand** = Array of shelves alongside an edge where multiple articles can be placed
 - Provided by the Store Owner:
-  - **Article** = the brand-specific commercial definition of a product (Price, Currency, Brand)
   - **Store** = physical unit with a brand identity, location, and operating schedule
+  - **Article** = the brand-specific commercial definition of a product (Price, Currency, Brand)
   - **Offer** = promotional logic linked to articles or stores
 - Provided by the Brand Owner:
   - **Brand** = the legal entity
@@ -76,7 +76,7 @@ To satisfy complex intents - such as de-listing an item from a shelf without del
 #### 3. Business Service
 
 - Actors: Store/Brand Owners
-- Resources: Brands, Stores, Offers
+- Resources: Brands, Stores, Articles, Offers
 - **/stores** = POST, GET, LIST, PATCH, DELETE
 - **/brands** = POST, GET, PATCH, DELETE
 - **/brands/{brandId}/articles** - POST, GET, PATCH, DELETE
