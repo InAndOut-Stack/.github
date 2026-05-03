@@ -19,8 +19,6 @@ The typical **Customer** workflow for generating an itinerary: he can optionally
 - **Brand Owner**
   - Manages the Brand profile (name, logo, etc.)
   - Manages the articles registered within his business
-- **System Admin**
-  - Manages product caching and route generations
 
 ## Resources
 
@@ -33,11 +31,17 @@ The typical **Customer** workflow for generating an itinerary: he can optionally
   - **Stand** = Array of shelves alongside an edge where multiple articles can be placed
 - Provided by the Store Owner:
   - **Article** = the brand-specific commercial definition of a product (Price, Currency, Brand)
-  - **Product** = Simple product record with details like name, category, or vendor
   - **Store** = physical unit with a brand identity, location, and operating schedule
   - **Offer** = promotional logic linked to articles or stores
 - Provided by the Brand Owner:
   - **Brand** = the legal entity
+- Other:
+  - **Product** = Simple product record with details like name, category, or vendor
+    - acts as an information cache preventing duplicate **Article** information across multiple businesses 
+    - not managed by system actors
+    - example:
+      - the Zuzu milk is sold by both Kaufland and Lidl,
+      - brands should reference the same product and not create two identical ones
 
 ### Relationships
 
@@ -71,12 +75,11 @@ To satisfy complex intents - such as de-listing an item from a shelf without del
 
 #### 3. Business Service
 
-- Actors: Brand/Store Owners
+- Actors: Store/Brand Owners
 - Resources: Brands, Stores, Offers
 - **/stores** = POST, GET, LIST, PATCH, DELETE
 - **/brands** = POST, GET, PATCH, DELETE
 - **/brands/{brandId}/articles** - POST, GET, PATCH, DELETE
-- **/products** - POST, GET, PATCH, DELETE
 - **/offers** - POST, GET, LIST, PATCH, DELETE
 
 ### Repositories
