@@ -45,6 +45,8 @@ The typical **Customer** workflow for generating an itinerary: he can optionally
 ### Relationships
 
 - 1 Brand <-> 0/∞ Stores
+- 1 Brand <-> 0/∞ Articles
+- 1 Brand <-> 0/∞ Offers
 - 1 Store <-> 0/∞ Floors
 - 1 Floor <-> 0/∞ Nodes
 - 1 Floor <-> 0/∞ Edges
@@ -61,15 +63,15 @@ To satisfy complex intents - such as de-listing an item from a shelf without del
 
 - Actors: Customers
 - Resources: Routes
-- **/routes** - POST, GET, DELETE
+- **/brands/{brandSlug}/stores/{storeUid}/routes** - POST, GET, DELETE
 - Store and stand selection interface
 
 #### 2. Map Service
 
 - Actors: Employee
 - Resources: Nodes, Edges, Floors, Stands
-- **/stores/{storeId}/floors** - POST, GET, PUT, DELETE
-- **/stores/{storeId}/stands** - POST, GET, LIST, PUT, DELETE
+- **/brands/{brandSlug}/stores/{storeUid}/floors** - POST, GET, PUT, DELETE
+- **/brands/{brandSlug}/stores/{storeUid}/stands** - POST, GET, LIST, PUT, DELETE
 - Floor modelling interface
 
 #### 3. Business Service
@@ -77,9 +79,9 @@ To satisfy complex intents - such as de-listing an item from a shelf without del
 - Actors: Store/Brand Owners
 - Resources: Brands, Stores, Articles, Offers
 - **/brands** = POST, GET, PATCH, DELETE
-- **/brands/{brandId}/stores** = POST, GET, LIST, PATCH, DELETE
-- **/brands/{brandId}/articles** - POST, GET, PATCH, DELETE
-- **/brands/{brandId}/offers** - POST, GET, LIST, PATCH, DELETE
+- **/brands/{brandSlug}/stores** = POST, GET, LIST, PATCH, DELETE
+- **/brands/{brandSlug}/articles** - POST, GET, PATCH, DELETE
+- **/brands/{brandSlug}/offers** - POST, GET, LIST, PATCH, DELETE
 
 ### Repositories
 
