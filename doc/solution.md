@@ -25,20 +25,19 @@ The typical **Customer** workflow for generating an itinerary: he can optionally
 - Provided by the Customer:
   - **Route** = Optimal in-store navigation path for visiting all the selected articles
 - Provided by the Employee:
-  - **Stand** = Array of shelves alongside an edge where multiple articles can be placed
-  - **Floor** = Undirected graph having nodes and edges representing a map component of a store
   - **Node** = Navigation point acting as an intersection between two edges
   - **Edge** = Navigation aisle open to Customers
+  - **Floor** = Undirected graph having nodes and edges representing a map component of a store
+  - **Stand** = Array of shelves alongside an edge where multiple articles can be placed
 - Provided by the Store Owner:
   - **Store** = physical unit with a brand identity, location, and operating schedule
   - **Article** = the brand-specific commercial definition of a product (Price, Currency, Brand)
   - **Offer** = promotional logic linked to articles or stores
 - Provided by the Brand Owner:
   - **Brand** = the legal entity
-- Other:
   - **Product** = Simple product record with details like name, category, or vendor
     - acts as an information cache preventing duplicate **Article** information across multiple businesses 
-    - not managed by system actors
+    - not directly managed by Brand Owners but they can request to create new records
     - example:
       - the Zuzu milk is sold by both Kaufland and Lidl,
       - brands should reference the same product and not create two identical ones
@@ -68,19 +67,19 @@ To satisfy complex intents - such as de-listing an item from a shelf without del
 #### 2. Map Service
 
 - Actors: Employee
-- Resources: Stands, Floors, Nodes, Edges
-- **/stores/{storeId}/stands** - POST, GET, LIST, PUT, DELETE
+- Resources: Nodes, Edges, Floors, Stands
 - **/stores/{storeId}/floors** - POST, GET, PUT, DELETE
+- **/stores/{storeId}/stands** - POST, GET, LIST, PUT, DELETE
 - Floor modelling interface
 
 #### 3. Business Service
 
 - Actors: Store/Brand Owners
 - Resources: Brands, Stores, Articles, Offers
-- **/stores** = POST, GET, LIST, PATCH, DELETE
 - **/brands** = POST, GET, PATCH, DELETE
+- **/brands/{brandId}/stores** = POST, GET, LIST, PATCH, DELETE
 - **/brands/{brandId}/articles** - POST, GET, PATCH, DELETE
-- **/offers** - POST, GET, LIST, PATCH, DELETE
+- **/brands/{brandId}/offers** - POST, GET, LIST, PATCH, DELETE
 
 ### Repositories
 
